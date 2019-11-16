@@ -12,10 +12,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Effect.cuh">
+    <ClInclude Include="cuda_lib.cuh">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="cuda_lib.cuh">
+    <ClInclude Include="filter.cuh">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
