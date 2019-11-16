@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <istream>
 #include <map>
 #include <sstream>
 
@@ -19,7 +20,7 @@ int main(int argc, char* argv[])
 	audio_type filetype;
 
 	std::string filename; 
-
+	std::cout << argc << std::endl;
 	//Manual input mode
 	if (argc < 3)
 	{
@@ -29,10 +30,12 @@ int main(int argc, char* argv[])
 	else filename = argv[1];
 	
 	//Open file
-	if ((audiofile = fopen(filename.c_str(), "r")) == NULL)
+	audiofile = fopen(filename.c_str(), "r");
+	if (audiofile == NULL)
 	{	
 		std::cout << "Something went wrong while opening file \"" << filename << "\"" << std::endl;
 		std::cout << "Aborting...." << std::endl;
+		return;
 	}
 	
 	//after opening file, determine given file's type 
@@ -45,11 +48,12 @@ int main(int argc, char* argv[])
 	while (std::getline(ss, token, '.'));
 	if (token == "wav")
 	{		
+
 		//Create WAV object
 		Audio_WAV i(audiofile,filename);
 		//Processing WAV object(With CUDA)
-		AudioHandler_WAV(i, argv, argc, true);
 		//print WAV object
+		Create_WAVfile(AudioHandler_WAV(i, argv, argc, true));
 	}
 	else
 	{

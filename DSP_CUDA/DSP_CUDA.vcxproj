@@ -84,10 +84,11 @@
     <ClInclude Include="CUDAlib.cuh" />
     <ClInclude Include="Filter.cuh" />
     <ClInclude Include="AudioEntry.h" />
+    <ClInclude Include="WAVFilter.cuh" />
+    <ClInclude Include="WAVHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Echo.cpp" />
-    <ClCompile Include="AudioConstruct.cpp" />
     <ClCompile Include="WAVHandler.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

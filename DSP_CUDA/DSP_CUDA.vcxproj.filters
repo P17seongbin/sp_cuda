@@ -27,6 +27,12 @@
     <ClInclude Include="AudioEntry.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="WAVHandler.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="WAVFilter.cuh">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="Echo.cu">
@@ -39,9 +45,6 @@
   <ItemGroup>
     <ClCompile Include="Echo.cpp">
       <Filter>Filter%28CPU%29</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioConstruct.cpp">
-      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="WAVHandler.cpp">
       <Filter>Source</Filter>
