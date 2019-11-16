@@ -15,11 +15,16 @@ void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool CUDAMode)
 		return;
 	else if (argc == 3)
 	{
-		//TODO: check third text is optional argument
-		FilterEchoCPU(input);
-
-		//If not, just change name
-		input.filename = argv[2];
+		if (true)
+		{
+			//TODO: check third text is optional argument
+			FilterEchoCPU(input);
+		}
+		else
+		{
+			//If not, just change name
+			input.filename = argv[2];
+		}
 	}
 	else if (argc == 4)
 	{
@@ -38,10 +43,8 @@ void Create_WAVfile(Audio_WAV& result)
 	outfile.write((char *)&result.get_header(), 44);
 
 
-	  char* res = result.get_audio();
+	char* res = result.get_audio();
 	long size = result.get_header().Subchunk2Size;
-	std::cout << size << std::endl;
-
 	long i = 0;
 	for (i = 0; i < size - WRITE_CHUNK; i += WRITE_CHUNK)
 	{

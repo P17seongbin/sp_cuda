@@ -12,6 +12,16 @@
 argument list:
 -echo x y : apply echo effect x times with delay of y seconds
 */
+
+std::string find_expender(std::string name)
+{
+	std::string token;
+	std::string t_name = name;
+	std::stringstream ss(t_name);
+
+	while (std::getline(ss, token, '.'));
+	return token;
+}
 int main(int argc, char* argv[])
 {
 
@@ -20,7 +30,6 @@ int main(int argc, char* argv[])
 	audio_type filetype;
 
 	std::string filename; 
-	std::cout << argc << std::endl;
 	//Manual input mode
 	if (argc < 3)
 	{
@@ -39,14 +48,9 @@ int main(int argc, char* argv[])
 	}
 	
 	//after opening file, determine given file's type 
-	//do something 
 	//일단은 wav만 한다고 가정
-	std::string token;
-	std::string t_name = filename;
-	std::stringstream ss(t_name);
-
-	while (std::getline(ss, token, '.'));
-	if (token == "wav")
+	std::string expender = find_expender(filename);
+	if (expender == "wav")
 	{		
 
 		//Create WAV object
