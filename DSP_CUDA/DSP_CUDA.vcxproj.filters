@@ -30,7 +30,7 @@
     <ClInclude Include="WAVHandler.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="WAVFilter.cuh">
+    <ClInclude Include="WAVFilter.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,6 +47,12 @@
       <Filter>Filter%28CPU%29</Filter>
     </ClCompile>
     <ClCompile Include="WAVHandler.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\Gadgets.h">
+      <Filter>Header</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\FileExtender.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

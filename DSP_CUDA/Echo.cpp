@@ -1,4 +1,4 @@
-#include "WAVFilter.cuh"
+#include "WAVFilter.h"
 #include "WAVHandler.h"
 #include <cstring>
 

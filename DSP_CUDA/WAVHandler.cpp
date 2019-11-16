@@ -1,24 +1,26 @@
-#define WRITE_CHUNK 1000
+constexpr auto WRITE_CHUNK = 1000;
 
 #include "WAVHandler.h"
-#include "WAVFilter.cuh"
+#include "WAVFilter.h"
+#include "utils/Gadgets.h"
 
 #include <iostream>
 #include <fstream>  
 //Do audio operation corrosponding given argment and return result WAV
 //Echo: DSP_CUDA input.wav (output.wav) --echo -> apply echo effect on input.wav and make result as 'output.wav'
 
-void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool CUDAMode)
+void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool TryCUDA)
 {
 	std::cout << "Argc: " << argc << std::endl;
 	if (argc == 2) // return as-is
 		return;
 	else if (argc == 3)
 	{
-		if (true)
+		std::string argv_2(argv[2]);
+		if (find_expender(argv_2) != "wav")
 		{
-			//TODO: check third text is optional argument
-			FilterEchoCPU(input);
+			if (argv_2 == "--echo")
+				FilterEchoCPU(input);
 		}
 		else
 		{
@@ -29,7 +31,19 @@ void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool CUDAMode)
 	else if (argc == 4)
 	{
 		//TODO: check third text is 'name'
-
+		std::string argv_2(argv[2]);
+		std::string argv_3(argv[3]);
+		if (find_expender(argv_2) == "wav")
+		{
+			input.filename = argv[2];
+			if (argv_3 == "--echo")
+				FilterEchoCPU(input);
+		}
+		else
+		{
+			std::cout << "Invalid arguments: " << argv_2 << std::endl;
+			exit(0);
+		}
 	}
 	else
 		//AS-IS
@@ -38,19 +52,19 @@ void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool CUDAMode)
 
 void Create_WAVfile(Audio_WAV& result)
 {
-	std::ofstream outfile(result.filename + "_out.wav", std::ios::binary | std::ios::out);
+	std::ofstream outfile(result.filename, std::ios::binary | std::ios::out);
 
 	outfile.write((char *)&result.get_header(), 44);
 
-
 	char* res = result.get_audio();
 	long size = result.get_header().Subchunk2Size;
+
 	long i = 0;
 	for (i = 0; i < size - WRITE_CHUNK; i += WRITE_CHUNK)
 	{
-		outfile.write(reinterpret_cast<char *>(&res[i]), WRITE_CHUNK);
+		outfile.write(&res[i], WRITE_CHUNK);
 	}
-	outfile.write(reinterpret_cast<char*>(&res[i]), size % WRITE_CHUNK);
+	outfile.write(&res[i], size % WRITE_CHUNK);
 
 	outfile.close();
 }

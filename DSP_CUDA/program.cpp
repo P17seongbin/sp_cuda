@@ -2,34 +2,23 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-#include <sstream>
 
-#include "CUDAlib.cuh"
+
 #include "Filter.cuh"
 #include "AudioEntry.h"
 #include "WAVHandler.h"
+#include "utils/Gadgets.h"
 /*
 argument list:
 -echo x y : apply echo effect x times with delay of y seconds
 */
 
-std::string find_expender(std::string name)
-{
-	std::string token;
-	std::string t_name = name;
-	std::stringstream ss(t_name);
-
-	while (std::getline(ss, token, '.'));
-	return token;
-}
 int main(int argc, char* argv[])
 {
-
-	//일단은 argument없이 구현
 	std::ifstream audiofile;
+	std::string filename;
 	audio_type filetype;
 
-	std::string filename; 
 	//Manual input mode
 	if (argc < 3)
 	{
@@ -37,8 +26,9 @@ int main(int argc, char* argv[])
 		std::cin >> filename;	
 	}
 	else filename = argv[1];
+
 	//Open file
-	audiofile.open(filename, std::ios::binary | std::ios::in );
+	audiofile.open(filename, std::ios::binary | std::ios::in);
 	
 	if (!audiofile)
 	{	
@@ -51,14 +41,13 @@ int main(int argc, char* argv[])
 	//일단은 wav만 한다고 가정
 	std::string expender = find_expender(filename);
 	if (expender == "wav")
-	{		
-
+	{
 		//Create WAV object
-		Audio_WAV i(audiofile,filename);
+		Audio_WAV item(audiofile,filename);
 		//Processing WAV object(With CUDA)
+		AudioHandler_WAV(item, argv, argc, true);
 		//print WAV object
-		AudioHandler_WAV(i, argv, argc, true);
-		Create_WAVfile(i);
+		Create_WAVfile(item);
 	}
 	else
 	{
