@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CudaCompile Include="kernel.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header">
+      <UniqueIdentifier>{fbf7c1e4-3381-4694-b1fd-48d7412f0ef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect">
+      <UniqueIdentifier>{8784c7c6-cb0a-4c64-a764-9295ffdee74b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Effect.cuh">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="cuda_lib.cuh">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

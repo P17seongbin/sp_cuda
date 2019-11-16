@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B2266E02-D7A4-437B-8D86-B0709EF10F32}</ProjectGuid>
-    <RootNamespace>sp_cuda</RootNamespace>
+    <ProjectGuid>{2C5FDF75-FF48-41CE-9A56-AE00EEDFD5C5}</ProjectGuid>
+    <RootNamespace>DSP_CUDA</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -78,6 +78,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <CudaCompile Include="kernel.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cuda_lib.cuh" />
+    <ClInclude Include="Effect.cuh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
