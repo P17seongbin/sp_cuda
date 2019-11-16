@@ -1,4 +1,3 @@
-#include "FileHandler.h"
 #include <sstream>
 #include <iostream>
 #include <map>
@@ -6,6 +5,7 @@
 //else, return false
 typedef FILE* (*FileOpenerType)(std::string); 
 
+//wav file opener, 임시로 분리했지만 크게 의미는 없는듯
 FILE* open_wav(std::string file_path)
 {
 	std::cout << file_path.c_str() << std::endl;

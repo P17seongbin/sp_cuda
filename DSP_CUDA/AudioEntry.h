@@ -13,8 +13,34 @@ typedef struct  WAV_HEADER {
 	unsigned long       SamplesPerSec;  // Sampling Frequency in Hz                             
 	unsigned long       bytesPerSec;    // bytes per second 
 	unsigned short      blockAlign;     // 2=16-bit mono, 4=16-bit stereo 
-	unsigned short      bitsPerSample;  // Number of bits per sample      
+	unsigned short      bitsPerSample;  // Number of bits per sample   
+
 	char                Subchunk2ID[4]; // "data"  string   
 	unsigned long       Subchunk2Size;  // Sampled data length    
 
 } wav_hdr;
+
+class Audio_WAV {
+private:
+	FILE* origin_file;
+	WAV_HEADER header;
+	//byte list, memory should allocated with calloc
+	unsigned char* audio;
+public:
+
+	Audio_WAV(FILE* file)
+	{
+		origin_file = file;
+		fread(&header, sizeof(WAV_HEADER), 1, file);
+		audio = (unsigned char*)calloc(header.Subchunk2Size, 1);
+	}
+
+
+
+	~Audio_WAV()
+	{
+		free(audio);
+	}
+
+
+};
