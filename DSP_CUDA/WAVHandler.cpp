@@ -11,6 +11,11 @@ constexpr auto WRITE_CHUNK = 1000;
 
 void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool TryCUDA)
 {
+	int CUDAcount;
+	cudaGetDeviceCount(&CUDAcount);
+
+	bool CUDAMode = TryCUDA && CUDAcount > 0;
+
 	std::cout << "Argc: " << argc << std::endl;
 	if (argc == 2) // return as-is
 		return;
@@ -20,7 +25,10 @@ void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool TryCUDA)
 		if (find_expender(argv_2) != "wav")
 		{
 			if (argv_2 == "--echo")
-				FilterEchoCPU(input);
+				if (CUDAMode)
+					FilterEchoCUDA(input);
+				else
+					FilterEchoCPU(input);
 		}
 		else
 		{
@@ -33,11 +41,15 @@ void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool TryCUDA)
 		//TODO: check third text is 'name'
 		std::string argv_2(argv[2]);
 		std::string argv_3(argv[3]);
+		//we only need to check "WAV" cause this is a WAV handler
 		if (find_expender(argv_2) == "wav")
 		{
 			input.filename = argv[2];
 			if (argv_3 == "--echo")
-				FilterEchoCPU(input);
+				if (CUDAMode)
+					FilterEchoCUDA(input);
+				else
+					FilterEchoCPU(input);
 		}
 		else
 		{
@@ -45,9 +57,6 @@ void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool TryCUDA)
 			exit(0);
 		}
 	}
-	else
-		//AS-IS
-		return;
 }
 
 void Create_WAVfile(Audio_WAV& result)
