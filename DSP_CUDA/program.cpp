@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-
+#include <chrono>
 
 #include "Filter.cuh"
 #include "AudioEntry.h"
@@ -44,8 +44,17 @@ int main(int argc, char* argv[])
 	{
 		//Create WAV object
 		Audio_WAV item(audiofile,filename);
+
+		// Record start time
+		auto start = std::chrono::high_resolution_clock::now();
+
 		//Processing WAV object(With CUDA)
 		AudioHandler_WAV(item, argv, argc, true);
+
+		// Record end time
+		auto finish = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double> elapsed = finish - start;
+		std::cout << "Elapsed time: " << elapsed.count() << " s\n";
 		//print WAV object
 		Create_WAVfile(item);
 	}

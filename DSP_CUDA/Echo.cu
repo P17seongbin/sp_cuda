@@ -1,6 +1,6 @@
 #include "CUDAlib.cuh"
 #include "WAVFilter.h"
-
+#include <chrono>
 #define BLOCK_SIZE 64
 
 __global__ void FilterEchoBlock(char* d_in, char* d_out, int offset)
@@ -43,17 +43,18 @@ void FilterEchoCUDA(Audio_WAV& origin)
 	cudaMalloc((void**) &d_in, memSize);
 	cudaMalloc((void**) &d_out, memSize);
 
-	cudaMemcpy(d_in, origin_bytes, memSize, cudaMemcpyHostToDevice);
-
 	// launch kernel
 	dim3 dimGrid(numBlocks);
 	dim3 dimBlock(BLOCK_SIZE);
 
+
 	FilterEchoBlock << < dimGrid, dimBlock, sharedMemSize >> > (d_in, d_out, offset);
+
 
 	cudaThreadSynchronize();
 
 	cudaMemcpy(origin_bytes, d_out, memSize, cudaMemcpyDeviceToHost);
+
 
 	cudaFree(d_in);
 	cudaFree(d_out);
