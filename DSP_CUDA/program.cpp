@@ -39,15 +39,16 @@ int main(int argc, char* argv[])
 	//do something 
 	//일단은 wav만 한다고 가정
 	std::string token;
-	std::stringstream ss(filename);
+	std::string t_name = filename;
+	std::stringstream ss(t_name);
 
 	while (std::getline(ss, token, '.'));
 	if (token == "wav")
 	{		
 		//Create WAV object
-		Audio_WAV i(audiofile);
-		//Processing WAV object
-		AudioHandler_WAV(i, argv, argc);
+		Audio_WAV i(audiofile,filename);
+		//Processing WAV object(With CUDA)
+		AudioHandler_WAV(i, argv, argc, true);
 		//print WAV object
 	}
 	else

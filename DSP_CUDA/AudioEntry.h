@@ -23,24 +23,25 @@ typedef struct  WAV_HEADER {
 
 class Audio_WAV {
 private:
+
 	FILE* origin_file;
 	WAV_HEADER header;
 	//byte list, memory should allocated with calloc
 	unsigned char* audio;
 public:
+	std::string filename;
 
-	Audio_WAV(FILE* file)
+	Audio_WAV(FILE* file, std::string name)
 	{
+		filename = name;
 		origin_file = file;
 		fread(&header, sizeof(WAV_HEADER), 1, file);
 		audio = (unsigned char*)calloc(header.Subchunk2Size, 1);
 	}
-	
 
 	~Audio_WAV()
 	{
 		free(audio);
 	}
-
 
 };
