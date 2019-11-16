@@ -89,7 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Echo.cpp" />
-    <ClCompile Include="utils\FileExtender.cpp" />
+    <ClCompile Include="utils\FindExtender.cpp" />
     <ClCompile Include="utils\Gadgets.h" />
     <ClCompile Include="WAVHandler.cpp" />
   </ItemGroup>

@@ -16,6 +16,9 @@
     <Filter Include="Filter%28CPU%29">
       <UniqueIdentifier>{df97b1e3-2ed9-4934-a21e-872c2fd4983c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Gadgets">
+      <UniqueIdentifier>{344b9fa7-915a-4052-b99f-8c4c3044385b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CUDAlib.cuh">
@@ -52,8 +55,8 @@
     <ClCompile Include="utils\Gadgets.h">
       <Filter>Header</Filter>
     </ClCompile>
-    <ClCompile Include="utils\FileExtender.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="utils\FindExtender.cpp">
+      <Filter>Gadgets</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
