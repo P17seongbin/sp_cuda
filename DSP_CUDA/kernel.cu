@@ -1,26 +1,36 @@
-#include "cuda_lib.cuh"
-#include "filter.cuh"
+#include "CUDAlib.cuh"
+#include "Filter.cuh"
+#include "FileHandler.h"
 
-#include <stdio.h>
+#include <string>
+#include <iostream>
 
-typedef struct  WAV_HEADER {
-	char                RIFF[4];        // RIFF Header      Magic header
-	unsigned long       ChunkSize;      // RIFF Chunk Size  
-	char                WAVE[4];        // WAVE Header      
-	char                fmt[4];         // FMT header       
-	unsigned long       Subchunk1Size;  // Size of the fmt chunk                                
-	unsigned short      AudioFormat;    // Audio format 1=PCM,6=mulaw,7=alaw, 257=IBM Mu-Law, 258=IBM A-Law, 259=ADPCM 
-	unsigned short      NumOfChan;      // Number of channels 1=Mono 2=Sterio                   
-	unsigned long       SamplesPerSec;  // Sampling Frequency in Hz                             
-	unsigned long       bytesPerSec;    // bytes per second 
-	unsigned short      blockAlign;     // 2=16-bit mono, 4=16-bit stereo 
-	unsigned short      bitsPerSample;  // Number of bits per sample      
-	char                Subchunk2ID[4]; // "data"  string   
-	unsigned long       Subchunk2Size;  // Sampled data length    
-
-} wav_hdr;
-
-int main()
+/*
+argument list:
+-echo x y : apply echo effect x times with delay of y seconds
+*/
+int main(int argc, char* argv[])
 {
+	//일단은 argument없이 구현
+	FILE *audiofile = NULL;
+	audio_type filetype;
 
+	std::string filename; 
+
+	//Manual input mode
+	if (argc < 3)
+	{
+		std::cout << "Type audio file path (WAV, MPC, FLAC) : ";
+		std::cin >> filename;	
+	}
+	else
+	{
+		filename = argv[1];
+	}
+	if ((audiofile = open_audio(filename, &filetype)) == NULL)
+	{ 
+		std::cout << "Something went wrong while opening file \"" << filename << "\"" << std::endl;
+		std::cout << "Aborting...." << std::endl;
+	}
+	
 }

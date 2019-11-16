@@ -1,22 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CudaCompile Include="kernel.cu" />
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Header">
       <UniqueIdentifier>{fbf7c1e4-3381-4694-b1fd-48d7412f0ef2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Effect">
       <UniqueIdentifier>{8784c7c6-cb0a-4c64-a764-9295ffdee74b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{92197ad2-09aa-40a0-8acb-99bc9b2674aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filter">
+      <UniqueIdentifier>{9f20db88-d56e-497d-ae56-659b207dda23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cuda_lib.cuh">
+    <ClInclude Include="FileHandler.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="filter.cuh">
+    <ClInclude Include="CUDAlib.cuh">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="SoundDescriptor.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Filter.cuh">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="kernel.cu">
+      <Filter>Source</Filter>
+    </CudaCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FileHandler.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
