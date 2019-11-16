@@ -1,6 +1,7 @@
 #pragma once
+#define READ_CHUNK 1000
 #include <iostream>
-
+#include <fstream>
 enum audio_type { WAV, MP3, FLAC };
 
 struct  WAV_HEADER {
@@ -24,33 +25,40 @@ struct  WAV_HEADER {
 class Audio_WAV {
 private:
 
-	FILE* origin_file;
 	WAV_HEADER header;
 	//byte list, memory should allocated with calloc
-	unsigned char* audio;
+	 char* audio;
 public:
 	std::string filename;
 	WAV_HEADER get_header()
 	{
 		return header;
 	}
-	unsigned char* get_audio()
+	  char* get_audio()
 	{
 		return audio;
 	}
-	Audio_WAV(FILE* file, std::string name)
+	Audio_WAV(std::ifstream& file, std::string name)
 	{
 		filename = name;
-		std::cout << name << std::endl;
-		origin_file = file;
-		fread(&header, sizeof(WAV_HEADER), 1, file);
-		audio = (unsigned char*)calloc(header.Subchunk2Size, 1);
-		fread(&audio, header.Subchunk2Size, 1, file);
+
+		file.read((char*)(&header), sizeof(WAV_HEADER));
+		audio = new  char[header.Subchunk2Size];
+		long size = header.Subchunk2Size;
+
+
+		int i = 0;
+		for (i = 0; i < size - READ_CHUNK; i += READ_CHUNK)
+		{
+			file.read((char *)&audio[i], READ_CHUNK);
+		}
+		file.read((char*)&audio[i], size % READ_CHUNK);
+
 	}
 
 	~Audio_WAV()
 	{
-		free(audio);
+		//free(audio);
 	}
 
 };

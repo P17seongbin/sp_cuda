@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#include <istream>
+#include <fstream>
 #include <map>
 #include <sstream>
 
@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 {
 
 	//일단은 argument없이 구현
-	FILE *audiofile = NULL;
+	std::ifstream audiofile;
 	audio_type filetype;
 
 	std::string filename; 
@@ -28,10 +28,10 @@ int main(int argc, char* argv[])
 		std::cin >> filename;	
 	}
 	else filename = argv[1];
-	
 	//Open file
-	audiofile = fopen(filename.c_str(), "r");
-	if (audiofile == NULL)
+	audiofile.open(filename, std::ios::binary | std::ios::in );
+	
+	if (!audiofile)
 	{	
 		std::cout << "Something went wrong while opening file \"" << filename << "\"" << std::endl;
 		std::cout << "Aborting...." << std::endl;
@@ -53,12 +53,12 @@ int main(int argc, char* argv[])
 		Audio_WAV i(audiofile,filename);
 		//Processing WAV object(With CUDA)
 		//print WAV object
-		Create_WAVfile(AudioHandler_WAV(i, argv, argc, true));
+		AudioHandler_WAV(i, argv, argc, true);
+		Create_WAVfile(i);
 	}
 	else
 	{
 		std::cout << "only WAV file is supported...aborting." << std::endl;
 	}
-	fclose(audiofile);
 }
 
