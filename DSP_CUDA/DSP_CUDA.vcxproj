@@ -77,16 +77,18 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="kernel.cu" />
+    <CudaCompile Include="Echo.cu" />
+    <CudaCompile Include="program.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CUDAlib.cuh" />
-    <ClInclude Include="FileHandler.h" />
     <ClInclude Include="Filter.cuh" />
-    <ClInclude Include="SoundDescriptor.h" />
+    <ClInclude Include="AudioEntry.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FileHandler.cpp" />
+    <ClCompile Include="Echo.cpp" />
+    <ClCompile Include="AudioConstruct.cpp" />
+    <ClCompile Include="WAVHandler.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

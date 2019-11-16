@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 enum audio_type { WAV, MP3, FLAC };
 
@@ -34,8 +35,7 @@ public:
 		fread(&header, sizeof(WAV_HEADER), 1, file);
 		audio = (unsigned char*)calloc(header.Subchunk2Size, 1);
 	}
-
-
+	
 
 	~Audio_WAV()
 	{

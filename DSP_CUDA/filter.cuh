@@ -1,5 +1,5 @@
 #include "CUDALib.cuh"
-#include "SoundDescriptor.h"
+#include "AudioEntry.h"
 #include <string>
 
 

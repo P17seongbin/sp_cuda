@@ -13,28 +13,37 @@
     <Filter Include="Filter">
       <UniqueIdentifier>{9f20db88-d56e-497d-ae56-659b207dda23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Filter%28CPU%29">
+      <UniqueIdentifier>{df97b1e3-2ed9-4934-a21e-872c2fd4983c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FileHandler.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="CUDAlib.cuh">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundDescriptor.h">
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="Filter.cuh">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="AudioEntry.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="kernel.cu">
+    <CudaCompile Include="Echo.cu">
+      <Filter>Filter</Filter>
+    </CudaCompile>
+    <CudaCompile Include="program.cpp">
       <Filter>Source</Filter>
     </CudaCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FileHandler.cpp">
+    <ClCompile Include="Echo.cpp">
+      <Filter>Filter%28CPU%29</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioConstruct.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="WAVHandler.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

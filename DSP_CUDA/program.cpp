@@ -3,10 +3,10 @@
 #include <map>
 #include <sstream>
 
+#include "CUDAlib.cuh"
 #include "Filter.cuh"
 #include "AudioEntry.h"
-
-
+#include "WAVHandler.h"
 /*
 argument list:
 -echo x y : apply echo effect x times with delay of y seconds
@@ -43,13 +43,17 @@ int main(int argc, char* argv[])
 
 	while (std::getline(ss, token, '.'));
 	if (token == "wav")
-	{
-
+	{		
+		//Create WAV object
+		Audio_WAV i(audiofile);
+		//Processing WAV object
+		AudioHandler_WAV(i, argv, argc);
+		//print WAV object
 	}
 	else
 	{
-		std::cout << "only WAV file is supported...Aborting." << std::endl;
-		fclose(audiofile);
+		std::cout << "only WAV file is supported...aborting." << std::endl;
 	}
+	fclose(audiofile);
 }
 
