@@ -1,5 +1,4 @@
 #include "CUDALib.cuh"
 #include "AudioEntry.h"
 
-void FilterEchoCUDA(Audio_WAV& origin);
-void FilterEchoCPU(Audio_WAV& origin);
+void FilterEcho(Audio_WAV& origin, bool useCUDA = false, double delay = 0.25, double gain = 0.5);

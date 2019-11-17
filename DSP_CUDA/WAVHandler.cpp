@@ -24,10 +24,7 @@ void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool TryCUDA)
 		if (find_expender(argv_2) != "wav")
 		{
 			if (argv_2 == "--echo")
-				if (CUDAMode)
-					FilterEchoCUDA(input);
-				else
-					FilterEchoCPU(input);
+				FilterEcho(input, CUDAMode);
 		}
 		else
 		{
@@ -45,10 +42,7 @@ void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool TryCUDA)
 		{
 			input.filename = argv[2];
 			if (argv_3 == "--echo")
-				if (CUDAMode)
-					FilterEchoCUDA(input);
-				else
-					FilterEchoCPU(input);
+				FilterEcho(input, CUDAMode);
 		}
 		else
 		{

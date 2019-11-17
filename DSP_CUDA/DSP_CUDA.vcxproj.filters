@@ -13,18 +13,12 @@
     <Filter Include="Filter">
       <UniqueIdentifier>{9f20db88-d56e-497d-ae56-659b207dda23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Filter%28CPU%29">
-      <UniqueIdentifier>{df97b1e3-2ed9-4934-a21e-872c2fd4983c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Gadgets">
       <UniqueIdentifier>{344b9fa7-915a-4052-b99f-8c4c3044385b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CUDAlib.cuh">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Filter.cuh">
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="AudioEntry.h">
@@ -46,9 +40,6 @@
     </CudaCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Echo.cpp">
-      <Filter>Filter%28CPU%29</Filter>
-    </ClCompile>
     <ClCompile Include="WAVHandler.cpp">
       <Filter>Source</Filter>
     </ClCompile>

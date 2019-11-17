@@ -4,7 +4,7 @@
 #include <map>
 #include <chrono>
 
-#include "Filter.cuh"
+#include "CUDAlib.cuh"
 #include "AudioEntry.h"
 #include "WAVHandler.h"
 #include "utils/Gadgets.h"
@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
 		start = std::chrono::high_resolution_clock::now();
 
 		//Processing WAV object(With CUDA)
-		AudioHandler_WAV(item, argv, argc, false);
+		//AudioHandler_WAV(item, argv, argc, false);
 
 		// Record end time
 		finish = std::chrono::high_resolution_clock::now();

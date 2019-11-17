@@ -3,7 +3,7 @@
 #include <chrono>
 #define BLOCK_SIZE 64
 
-__global__ void FilterEchoBlock(char* d_in, char* d_out, int offset)
+__global__ void FilterEchoBlock(char* d_in, char* d_out, int offset, double gain)
 {
 	__shared__ int s_data[BLOCK_SIZE];
 	int d_data;
@@ -23,39 +23,49 @@ __global__ void FilterEchoBlock(char* d_in, char* d_out, int offset)
 
 	__syncthreads();
 
-	d_data += s_data[threadIdx.x];
+	d_data += s_data[threadIdx.x] * gain;
 	d_out[dst_x] = d_data;
 }
 
-void FilterEchoCUDA(Audio_WAV& origin)
+void FilterEcho(Audio_WAV& origin, bool useCUDA, double delay , double gain )
 {
 	WAV_HEADER origin_header = origin.get_header();
 	size_t memSize  = origin_header.Subchunk2Size;
 	char* origin_bytes = origin.get_audio();
-	int offset = origin_header.sampleRate / 4;
+	int offset = origin_header.sampleRate * delay;
 
-	//pointer for device
-	char *d_in, * d_out;
+	if (useCUDA)
+	{
+		//pointer for device
+		char* d_in, * d_out;
 
-	int numBlocks = (memSize / BLOCK_SIZE) + 1; //celling
-	int sharedMemSize = BLOCK_SIZE; //one byte for each thread
+		int numBlocks = (memSize / BLOCK_SIZE) + 1; //celling
+		int sharedMemSize = BLOCK_SIZE; //one byte for each thread
 
-	cudaMalloc((void**) &d_in, memSize);
-	cudaMalloc((void**) &d_out, memSize);
+		cudaMalloc((void**)& d_in, memSize);
+		cudaMalloc((void**)& d_out, memSize);
 
-	cudaMemcpy(d_in, origin_bytes, memSize, cudaMemcpyHostToDevice);
-	// launch kernel
-	dim3 dimGrid(numBlocks);
-	dim3 dimBlock(BLOCK_SIZE);
-	FilterEchoBlock << < dimGrid, dimBlock, sharedMemSize >> > (d_in, d_out, offset);
+		cudaMemcpy(d_in, origin_bytes, memSize, cudaMemcpyHostToDevice);
+		// launch kernel
+		dim3 dimGrid(numBlocks);
+		dim3 dimBlock(BLOCK_SIZE);
+		FilterEchoBlock << < dimGrid, dimBlock, sharedMemSize >> > (d_in, d_out, offset, gain);
 
+		cudaThreadSynchronize();
 
-	cudaThreadSynchronize();
+		cudaMemcpy(origin_bytes, d_out, memSize, cudaMemcpyDeviceToHost);
 
-	cudaMemcpy(origin_bytes, d_out, memSize, cudaMemcpyDeviceToHost);
+		cudaFree(d_in);
+		cudaFree(d_out);
+	}
+	else
+	{
+		char* origin_archive = new char[memSize];
+		std::memcpy((char*)origin_archive, (char*)origin_bytes, memSize);
 
-
-	cudaFree(d_in);
-	cudaFree(d_out);
-
+		for (int i = offset + 1; i < memSize; i++)
+		{
+			origin_bytes[i] = origin_archive[i] + origin_archive[i - offset] * gain;
+		}
+	}
 }
