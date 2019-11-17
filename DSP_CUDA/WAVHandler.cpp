@@ -25,6 +25,15 @@ void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool TryCUDA)
 		{
 			if (argv_2 == "--echo")
 				FilterEcho(input, CUDAMode);
+			else if (argv_2 == "--cascade_reverb")
+			{
+				FilterEcho(input, CUDAMode, 0.25, 0.1);
+				FilterEcho(input, CUDAMode, 0.20, 0.1);
+				FilterEcho(input, CUDAMode, 0.15, 0.1);
+				FilterEcho(input, CUDAMode, 0.10, 0.1);
+				FilterAllpass(input, CUDAMode, 0.5, 0.1,0);
+				FilterAllpass(input, CUDAMode, 0.5, 0.1, 0);
+			}
 		}
 		else
 		{
@@ -43,6 +52,17 @@ void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool TryCUDA)
 			input.filename = argv[2];
 			if (argv_3 == "--echo")
 				FilterEcho(input, CUDAMode);
+			else if (argv_3 == "--cascade_reverb")
+			{
+				FilterEcho(input, CUDAMode, 0.5, 0.7);
+				FilterEcho(input, CUDAMode, 0.5, 0.7);
+				FilterEcho(input, CUDAMode, 0.6, 0.7);
+				FilterEcho(input, CUDAMode, 0.7, 0.7);
+				FilterAllpass(input, CUDAMode, 0.1, 0.7, 0);
+				FilterAllpass(input, CUDAMode, 0.1, 0.7, 0);
+
+
+			}
 		}
 		else
 		{

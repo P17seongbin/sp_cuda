@@ -11,17 +11,12 @@ __global__ void FilterEchoBlock(char* d_in, char* d_out, int offset, double gain
 	int dst_x = blockIdx.x * blockDim.x + threadIdx.x;
 	int src_x = dst_x + offset;
 	// Load one element per thread from device memory and store it 
-	// *in reversed order* into temporary shared memory
 
 	d_data = d_in[dst_x];
 	if (dst_x >= offset)
 		s_data[threadIdx.x] = d_in[src_x];
 	else
 		s_data[threadIdx.x] = 0;
-
-	// Block until all threads in the block have written their data to shared mem
-
-	__syncthreads();
 
 	d_data += s_data[threadIdx.x] * gain;
 	d_out[dst_x] = d_data;

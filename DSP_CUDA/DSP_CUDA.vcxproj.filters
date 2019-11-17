@@ -32,11 +32,14 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="Echo.cu">
-      <Filter>Filter</Filter>
-    </CudaCompile>
     <CudaCompile Include="program.cpp">
       <Filter>Source</Filter>
+    </CudaCompile>
+    <CudaCompile Include="filter\Echo.cu">
+      <Filter>Filter</Filter>
+    </CudaCompile>
+    <CudaCompile Include="filter\Allpass.cu">
+      <Filter>Filter</Filter>
     </CudaCompile>
   </ItemGroup>
   <ItemGroup>

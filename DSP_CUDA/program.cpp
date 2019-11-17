@@ -56,12 +56,11 @@ int main(int argc, char* argv[])
 		std::chrono::duration<double> elapsed = finish - start;
 		std::cout << "Elapsed time(GPU): " << elapsed.count() * 1000 << " ms\n";
 
-
 		// Record start time
 		start = std::chrono::high_resolution_clock::now();
 
-		//Processing WAV object(With CUDA)
-		//AudioHandler_WAV(item, argv, argc, false);
+		//Processing WAV object(Without CUDA)
+		AudioHandler_WAV(item, argv, argc, false);
 
 		// Record end time
 		finish = std::chrono::high_resolution_clock::now();
