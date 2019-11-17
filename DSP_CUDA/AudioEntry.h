@@ -37,10 +37,20 @@ public:
 	{
 		return audio;
 	}
+
 	Audio_WAV(std::ifstream& file, std::string name)
 	{
 		filename = name;
+		load(file);
+	}
 
+	Audio_WAV(std::string name)
+	{
+		filename = name;
+	}
+
+	void load(std::ifstream& file)
+	{
 		file.read((char*)(&header), sizeof(WAV_HEADER));
 		audio = new char[header.Subchunk2Size];
 		long size = header.Subchunk2Size;
@@ -52,6 +62,7 @@ public:
 		}
 		file.read((char*)& audio[i], size % READ_CHUNK);
 	}
+
 
 	~Audio_WAV()
 	{

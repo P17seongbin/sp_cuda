@@ -58,5 +58,8 @@
     <ClCompile Include="utils\FindExtender.cpp">
       <Filter>Gadgets</Filter>
     </ClCompile>
+    <ClCompile Include="SineGenerator.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
