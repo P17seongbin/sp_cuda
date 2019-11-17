@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 		std::cout << "Aborting...." << std::endl;
 		return;
 	}
-	
+	cudaFree(0);
 	//after opening file, determine given file's type 
 	//일단은 wav만 한다고 가정
 	std::string expender = find_expender(filename);
@@ -54,7 +54,20 @@ int main(int argc, char* argv[])
 		// Record end time
 		auto finish = std::chrono::high_resolution_clock::now();
 		std::chrono::duration<double> elapsed = finish - start;
-		std::cout << "Elapsed time: " << elapsed.count() << " s\n";
+		std::cout << "Elapsed time(GPU): " << elapsed.count() * 1000 << " ms\n";
+
+
+		// Record start time
+		start = std::chrono::high_resolution_clock::now();
+
+		//Processing WAV object(With CUDA)
+		AudioHandler_WAV(item, argv, argc, false);
+
+		// Record end time
+		finish = std::chrono::high_resolution_clock::now();
+		elapsed = finish - start;
+		std::cout << "Elapsed time(CPU): " << elapsed.count() * 1000 << " ms\n";
+
 		//print WAV object
 		Create_WAVfile(item);
 	}

@@ -16,7 +16,6 @@ void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool TryCUDA)
 
 	bool CUDAMode = TryCUDA && CUDAcount > 0;
 
-	std::cout << "Argc: " << argc << std::endl;
 	if (argc == 2) // return as-is
 		return;
 	else if (argc == 3)

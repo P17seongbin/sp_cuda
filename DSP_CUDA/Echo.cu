@@ -39,15 +39,14 @@ void FilterEchoCUDA(Audio_WAV& origin)
 
 	int numBlocks = (memSize / BLOCK_SIZE) + 1; //celling
 	int sharedMemSize = BLOCK_SIZE; //one byte for each thread
-	
+
 	cudaMalloc((void**) &d_in, memSize);
 	cudaMalloc((void**) &d_out, memSize);
 
+	cudaMemcpy(d_in, origin_bytes, memSize, cudaMemcpyHostToDevice);
 	// launch kernel
 	dim3 dimGrid(numBlocks);
 	dim3 dimBlock(BLOCK_SIZE);
-
-
 	FilterEchoBlock << < dimGrid, dimBlock, sharedMemSize >> > (d_in, d_out, offset);
 
 
