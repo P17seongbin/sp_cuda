@@ -39,6 +39,10 @@ public:
 	{
 		return audio;
 	}
+	void set_audio(char* path)
+	{
+		audio = path;
+	}
 
 	Audio_WAV(std::ifstream& file, std::string name)
 	{

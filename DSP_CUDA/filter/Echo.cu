@@ -6,15 +6,16 @@
 __global__ void FilterEchoBlock(char* d_in, char* d_out, long offset, double gain)
 {
 	__shared__ int s_data[BLOCK_SIZE];
-	int d_data;
+	char d_data;
 
 	int dst_x = blockIdx.x * blockDim.x + threadIdx.x;
-	int src_x = dst_x + offset;
+	int src_x = dst_x - offset;
 	// Load one element per thread from device memory and store it 
 
 	d_data = d_in[dst_x];
-	if (dst_x >= offset)
-		s_data[threadIdx.x] = d_in[src_x];
+
+	if (dst_x > offset)
+		s_data[threadIdx.x] = *(d_in+src_x);
 	else
 		s_data[threadIdx.x] = 0;
 
@@ -22,25 +23,25 @@ __global__ void FilterEchoBlock(char* d_in, char* d_out, long offset, double gai
 	d_out[dst_x] = d_data;
 }
 
-void FilterEcho(Audio_WAV& origin, bool useCUDA, double delay , double gain)
+void FilterEcho(Audio_WAV& origin, bool useCUDA, double delay, double gain)
 {
 	WAV_HEADER origin_header = origin.get_header();
 	size_t memSize  = origin_header.Subchunk2Size;
-	std::cout << memSize << std::endl;
 	char* origin_bytes = origin.get_audio();
 	unsigned long byteperSecond = origin_header.sampleRate * origin_header.blockAlign;
 	long offset = byteperSecond * delay;
 
 	if (useCUDA)
 	{
+		std::cout << "CUDA " << std::endl;
 		//pointer for device
-		char* d_in, * d_out;
+		char *d_in, *d_out;
 
 		int numBlocks = (memSize / BLOCK_SIZE) + 1; //celling
 		int sharedMemSize = BLOCK_SIZE; //one byte for each thread
 
-		cudaMalloc((void**)& d_in, memSize);
-		cudaMalloc((void**)& d_out, memSize);
+		cudaMalloc(&d_in, memSize);
+		cudaMalloc(&d_out, memSize);
 
 		cudaMemcpy(d_in, origin_bytes, memSize, cudaMemcpyHostToDevice);
 		// launch kernel
@@ -50,7 +51,12 @@ void FilterEcho(Audio_WAV& origin, bool useCUDA, double delay , double gain)
 
 		cudaThreadSynchronize();
 
-		cudaMemcpy(origin_bytes, d_out, memSize, cudaMemcpyDeviceToHost);
+		memset(origin_bytes, 0, memSize);
+
+		char* origin_archive = new char[memSize];
+		cudaMemcpy(origin_archive, d_out, memSize, cudaMemcpyDeviceToHost);
+
+		origin.set_audio(origin_archive);
 
 		cudaFree(d_in);
 		cudaFree(d_out);

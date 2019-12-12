@@ -48,10 +48,10 @@ int main(int argc, char* argv[])
 		//Create WAV object
 		Audio_WAV item(audiofile,filename);
 		//Processing WAV object(With CUDA if available)
-		//AudioHandler_WAV(item, argv, argc, true);
+		AudioHandler_WAV(item, argv, argc, true);
 
 		//Processing WAV object(Without CUDA)
-		AudioHandler_WAV(item, argv, argc, false);
+		//AudioHandler_WAV(item, argv, argc, false);
 
 		//print WAV object
 		Create_WAVfile(item);
