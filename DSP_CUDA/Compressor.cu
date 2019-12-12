@@ -33,7 +33,6 @@ __global__ void FilterCompressorBlock(char* d_in, char* d_out, double threshold,
 	}
 
 	memcpy((d_out + x), &d_data, byterate);
-	
 }
 
 void FilterCompressor(Audio_WAV& origin, bool useCUDA, double threshold, double ratio)

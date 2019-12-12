@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 {
 	std::ifstream audiofile;
 	std::string filename;
-	clock_t start, end;
+	std::chrono::system_clock::time_point start, end;
 	audio_type filetype;
 
 	//Manual input mode
@@ -50,19 +50,19 @@ int main(int argc, char* argv[])
 		//Create WAV object
 		Audio_WAV item(audiofile,filename);
 
-		start = clock();
+		start = std::chrono::system_clock::now();
 		//Processing WAV object(With CUDA if available)
 		AudioHandler_WAV(item, argv, argc, true);
-		end = clock();
+		end  = std::chrono::system_clock::now();
 
-		std::cout << "GPU: " << (end - start) << " ms" << std::endl;
+		std::cout << "GPU: " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / 1000.0 << " ms" << std::endl;
 
-		start = clock();
+		start = std::chrono::system_clock::now();
 		//Processing WAV object(Without CUDA)
 		AudioHandler_WAV(item, argv, argc, false);
 
-		end = clock();
-		std::cout << "CPU: " << (end - start) << " ms" << std::endl;
+		end = std::chrono::system_clock::now();
+		std::cout << "CPU: " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / 1000.0 << " ms" << std::endl;
 
 		//print WAV object
 		Create_WAVfile(item);
