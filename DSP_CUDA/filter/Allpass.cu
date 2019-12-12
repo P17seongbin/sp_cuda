@@ -9,7 +9,7 @@ __global__ void FilterAllPassBlock(char* d_in, char* d_out, int offset, double g
 	int d_data;
 
 	int dst_x = blockIdx.x * blockDim.x + threadIdx.x;
-	int src_x = dst_x + offset;
+	int src_x = dst_x - offset;
 	double t1 = (1 - (gain * gain));
 	// Load one element per thread from device memory and store it 
 

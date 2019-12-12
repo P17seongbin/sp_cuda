@@ -33,7 +33,6 @@ void FilterEcho(Audio_WAV& origin, bool useCUDA, double delay, double gain)
 
 	if (useCUDA)
 	{
-		std::cout << "CUDA " << std::endl;
 		//pointer for device
 		char *d_in, *d_out;
 

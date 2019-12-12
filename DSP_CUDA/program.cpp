@@ -8,6 +8,8 @@
 #include "AudioEntry.h"
 #include "WAVHandler.h"
 #include "utils/Gadgets.h"
+
+#include <time.h>
 /*
 argument list:
 -echo x y : apply echo effect x times with delay of y seconds
@@ -17,7 +19,7 @@ int main(int argc, char* argv[])
 {
 	std::ifstream audiofile;
 	std::string filename;
-
+	clock_t start, end;
 	audio_type filetype;
 
 	//Manual input mode
@@ -47,11 +49,20 @@ int main(int argc, char* argv[])
 	{
 		//Create WAV object
 		Audio_WAV item(audiofile,filename);
+
+		start = clock();
 		//Processing WAV object(With CUDA if available)
 		AudioHandler_WAV(item, argv, argc, true);
+		end = clock();
 
+		std::cout << "GPU: " << (end - start) << " ms" << std::endl;
+
+		start = clock();
 		//Processing WAV object(Without CUDA)
-		//AudioHandler_WAV(item, argv, argc, false);
+		AudioHandler_WAV(item, argv, argc, false);
+
+		end = clock();
+		std::cout << "CPU: " << (end - start) << " ms" << std::endl;
 
 		//print WAV object
 		Create_WAVfile(item);
