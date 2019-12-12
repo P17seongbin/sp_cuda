@@ -81,6 +81,7 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <CudaCompile Include="Compressor.cu" />
     <CudaCompile Include="filter\Echo.cu" />
     <CudaCompile Include="filter\Allpass.cu" />
     <CudaCompile Include="program.cpp" />
@@ -92,7 +93,6 @@
     <ClInclude Include="WAVHandler.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SineGenerator.cpp" />
     <ClCompile Include="utils\FindExtender.cpp" />
     <ClCompile Include="utils\Gadgets.h" />
     <ClCompile Include="WAVHandler.cpp" />

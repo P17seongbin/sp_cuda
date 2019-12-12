@@ -16,9 +16,9 @@ void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool TryCUDA)
 
 	bool CUDAMode = TryCUDA && CUDAcount > 0;
 
-	if (argc == 2) // return as-is
+	if (argc == 2) // return as-is (no filter)
 		return;
-	else if (argc == 3)
+	else if (argc == 3) // one filter, this plugin does not support multi-filter processing
 	{
 		std::string argv_2(argv[2]);
 		if (find_expender(argv_2) != "wav")
@@ -31,8 +31,15 @@ void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool TryCUDA)
 				FilterEcho(input, CUDAMode, 0.20, 0.1);
 				FilterEcho(input, CUDAMode, 0.15, 0.1);
 				FilterEcho(input, CUDAMode, 0.10, 0.1);
-				FilterAllpass(input, CUDAMode, 0.5, 0.1,0);
 				FilterAllpass(input, CUDAMode, 0.5, 0.1, 0);
+				FilterAllpass(input, CUDAMode, 0.5, 0.1, 0);
+			}
+			else if (argv_2 == "--compressor")
+			{
+				double threshold = 100; //dB
+				double ratio = 0.1;
+				//compressor without attack and release(?)	
+				FilterCompressor(input, CUDAMode, threshold, ratio);
 			}
 		}
 		else
@@ -60,8 +67,6 @@ void AudioHandler_WAV(Audio_WAV& input, char* argv[], int argc, bool TryCUDA)
 				FilterEcho(input, CUDAMode, 0.7, 0.7);
 				FilterAllpass(input, CUDAMode, 0.1, 0.7, 0);
 				FilterAllpass(input, CUDAMode, 0.1, 0.7, 0);
-
-
 			}
 		}
 		else

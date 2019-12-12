@@ -41,6 +41,9 @@
     <CudaCompile Include="filter\Allpass.cu">
       <Filter>Filter</Filter>
     </CudaCompile>
+    <CudaCompile Include="Compressor.cu">
+      <Filter>Filter</Filter>
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WAVHandler.cpp">
@@ -51,9 +54,6 @@
     </ClCompile>
     <ClCompile Include="utils\FindExtender.cpp">
       <Filter>Gadgets</Filter>
-    </ClCompile>
-    <ClCompile Include="SineGenerator.cpp">
-      <Filter>Effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

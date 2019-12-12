@@ -1,4 +1,6 @@
+*.zip
 *.wav
+*.exe
 # Created by https://www.gitignore.io/api/cuda,visualstudio
 # Edit at https://www.gitignore.io/?templates=cuda,visualstudio
 

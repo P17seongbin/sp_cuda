@@ -3,7 +3,7 @@
 #include <chrono>
 #define BLOCK_SIZE 64
 
-__global__ void FilterEchoBlock(char* d_in, char* d_out, int offset, double gain)
+__global__ void FilterEchoBlock(char* d_in, char* d_out, long offset, double gain)
 {
 	__shared__ int s_data[BLOCK_SIZE];
 	int d_data;
@@ -22,12 +22,14 @@ __global__ void FilterEchoBlock(char* d_in, char* d_out, int offset, double gain
 	d_out[dst_x] = d_data;
 }
 
-void FilterEcho(Audio_WAV& origin, bool useCUDA, double delay , double gain )
+void FilterEcho(Audio_WAV& origin, bool useCUDA, double delay , double gain)
 {
 	WAV_HEADER origin_header = origin.get_header();
 	size_t memSize  = origin_header.Subchunk2Size;
+	std::cout << memSize << std::endl;
 	char* origin_bytes = origin.get_audio();
-	int offset = origin_header.sampleRate * delay;
+	unsigned long byteperSecond = origin_header.sampleRate * origin_header.blockAlign;
+	long offset = byteperSecond * delay;
 
 	if (useCUDA)
 	{

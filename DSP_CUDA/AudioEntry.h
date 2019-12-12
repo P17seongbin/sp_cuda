@@ -5,7 +5,7 @@ constexpr auto READ_CHUNK = 1000;
 enum audio_type { WAV, MP3, FLAC };
 
 struct  WAV_HEADER {
-	char                RIFF[4];        // RIFF Header      Magic header
+	char                RIFF[4];        // RIFF Header  
 	unsigned long       ChunkSize;      // RIFF Chunk Size  
 	char                WAVE[4];        // WAVE Header      
 	char                fmt[4];         // FMT header       
@@ -28,7 +28,9 @@ private:
 	//byte list, memory should allocated with calloc
 	char* audio;
 public:
+
 	std::string filename;
+
 	WAV_HEADER get_header()
 	{
 		return header;
